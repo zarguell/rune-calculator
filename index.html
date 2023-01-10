@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Golden Rune Calculator</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+  <body style="background-color: #212121;">
+    <header>
+      <h2 class="teal" style="text-align: center;">Elden Ring</h2>
+      <h3 class="teal" style="text-align: center;">Golden Rune Calculator</h3>
+    </header>
+    
+    <div class="container">
+        <form id="rune-form">
+          <div class="row">
+            <div class="input-field col s3">
+              <label for="runes-needed" style="color: white;">Runes needed:</label>
+              <input type="number" id="runes-needed" min="0" class="green-text">
+            </div>
+            <div class="input-field col s3">
+              <label for="runes-have" style="color: white;">Curent Runes:</label>
+              <input type="number" id="runes-have" min="0" class="green-text">
+            </div>
+            <div class="input-field col s3">
+              <label for="rune-1" style="color: white;"># Golden Rune 1:</label>
+              <input type="number" id="rune-1" min="0" class="green-text">
+            </div>
+            <div class="input-field col s3">
+              <label for="rune-2" style="color: white;"># Golden Rune 2:</label>
+              <input type="number" id="rune-2" min="0" class="green-text">
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s3">
+              <label for="rune-3" style="color: white;"># Golden Rune 3:</label>
+              <input type="number" id="rune-3" min="0" class="green-text">
+            </div>
+            <div class="input-field col s3">
+              <label for="rune-4" style="color: white;"># Golden Rune 4:</label>
+              <input type="number" id="rune-4" min="0" class="green-text">
+            </div>
+            <div class="input-field col s3">
+              <label for="rune-5" style="color: white;"># Golden Rune 5:</label>
+              <input type="number" id="rune-5" min="0" class="green-text">
+            </div>
+            <div class="input-field col s3">
+              <label for="rune-6" style="color: white;"># Golden Rune 6:</label>
+              <input type="number" id="rune-6" min="0" class="green-text">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s3">
+              <label for="rune-7" style="color: white;"># Golden Rune 7:</label>
+              <input type="number" id="rune-7" min="0" class="green-text">
+            </div>
+            <div class="input-field col s3">
+              <label for="rune-8" style="color: white;"># Golden Rune 8:</label>
+              <input type="number" id="rune-8" min="0" class="green-text">
+            </div>
+            <div class="input-field col s3">
+              <label for="rune-7" style="color: white;"># Golden Rune 7:</label>
+              <input type="number" id="rune-7" min="0" class="green-text">
+            </div>
+            <div class="input-field col s3">
+              <label for="rune-8" style="color: white;"># Golden Rune 8:</label>
+              <input type="number" id="rune-8" min="0" class="green-text">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s2">
+              <label for="rune-9" style="color: white;"># Golden Rune 9:</label>
+              <input type="number" id="rune-9" min="0" class="green-text">
+            </div>
+            <div class="input-field col s2">
+              <label for="rune-10" style="color: white;"># Golden Rune 10:</label>
+              <input type="number" id="rune-10" min="0" class="green-text">
+            </div>
+            <div class="input-field col s2">
+              <label for="rune-11" style="color: white;"># Golden Rune 11:</label>
+              <input type="number" id="rune-11" min="0" class="green-text">
+            </div>
+            <div class="input-field col s2">
+              <label for="rune-12" style="color: white;"># Golden Rune 12:</label>
+              <input type="number" id="rune-12" min="0" class="green-text">
+            </div>
+            <div class="input-field col s2">
+              <label for="rune-13" style="color: white;"># Golden Rune 13:</label>
+              <input type="number" id="rune-13" min="0" class="green-text">
+            </div>
+            <div class="input-field col s2">
+              <button type="submit">Calculate</button>
+            </div>
+          </div>
+
+          <br>
+        </form>
+        <br>
+        <div id="result"></div>
+      </div>
+      
+    <script src="calculateRunes.js"></script>
+    <script>
+        const form = document.querySelector('#rune-form');
+        const resultDiv = document.querySelector('#result');
+
+        form.addEventListener('submit', e => {
+        e.preventDefault();
+        const runesNeeded = document.querySelector('#runes-needed').value;
+        const runesHave = document.querySelector('#runes-have').value;
+
+         // Initialize the array to store the #  each type of golden runes
+        const availableRunes = [];
+
+        // Get the #  each type of golden runes
+        for (let i = 0; i < 13; i++) {
+            const inputField = document.querySelector(`#rune-${i + 1}`);
+            availableRunes.push(inputField.value);
+        }
+
+        const numGoldenRunes = calculateRunes(runesNeeded, runesHave, availableRunes);
+
+        const table = document.createElement('table');
+        table.style.margin = 'auto';
+        table.style.width = '66%';
+        table.classList.add('striped', 'highlight');
+        table.innerHTML = `
+            <thead>
+            <tr>
+                <th style="color: white;">Golden Rune</th>
+                <th style="color: white;">Quantity Needed</th>
+            </tr>
+            </thead>
+            <tbody>
+            ${numGoldenRunes.map((quantity, index) => `
+                <tr>
+                <td style="color: white; text-align: center;">${index + 1}</td>
+                <td style="color: white; text-align: center">${quantity}</td>
+                </tr>
+            `).join('')}
+            </tbody>
+        `;
+
+        resultDiv.innerHTML = '';
+        resultDiv.appendChild(table);
+        });
+    </script>
+  </body>
+</html>
